@@ -4,9 +4,9 @@ services:
     container_name: postgre
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      - 'POSTGRES_USER: ${DB_USER}'
+      - 'POSTGRES_PASSWORD: ${DB_PASSWORD}'
+      - 'POSTGRES_DB: ${DB_NAME}'
     ports:
       - "5432:5432"
 
@@ -24,7 +24,7 @@ services:
       - postgre
       - backend
     environment:
-      - NUXT_PUBLIC_API_URL=http://backend:3300
+      - 'NUXT_PUBLIC_API_URL=${BACKEND_URL}'
 
   backend:
     build: 
@@ -33,12 +33,12 @@ services:
     container_name: backend
     restart: always
     environment:
-      - DB_HOST=postgre
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - HASH=88fa489e61e770b504e3a537b6de93db380390cf437cc8af17f7aa6455f789bd
-      - ORIGINS=http://localhost:3000/
+      - 'DB_HOST=${DB_HOST}'
+      - 'DB_PORT=${DB_PORT}'
+      - 'DB_USER=${DB_USER}'
+      - 'DB_PASSWORD=${DB_PASSWORD}'
+      - 'HASH=${HASH}'
+      - 'ORIGINS=${BACKEND_ORIGINS}'
     ports:
       - "3300:3300"
     networks:
