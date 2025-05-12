@@ -5,15 +5,22 @@ import { cors } from '@elysiajs/cors'
 import { migration } from './api/database'
 import { room } from './api/room'
 import { reserve } from './api/reserve'
+import { env } from './env'
 
 const app = new Elysia({ adapter: node() })
-   .use(cors())
-   .use(auth)
-   .use(room)
-   .use(migration)
-   .use(reserve)
-   .listen(3300, ({hostname, port}) => {
-      console.log(`Running on ${hostname}:${port}`)
+  // running out of time this, will do
+  .use(cors({
+    origin: env.ORIGINS,
+    methods: "*",
+    maxAge: 3600,
+    preflight: true,
+  }))
+  .use(auth)
+  .use(room)
+  .use(migration)
+  .use(reserve)
+  .listen(3300, ({ hostname, port }) => {
+    console.log(`Running on ${hostname}:${port}`)
 })
 
 
