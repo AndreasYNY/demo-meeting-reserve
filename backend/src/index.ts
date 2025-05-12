@@ -11,9 +11,6 @@ const app = new Elysia({ adapter: node() })
   // running out of time this, will do
   .use(cors({
     origin: env.ORIGINS,
-    methods: "*",
-    maxAge: 3600,
-    preflight: true,
   }))
   .use(auth)
   .use(room)
