@@ -17,6 +17,13 @@ export default defineNuxtConfig({
   },
 
   modules: ['shadcn-nuxt', '@nuxtjs/color-mode', 'nuxt-security'],
+  security: {
+    corsHandler: {
+      origin: '*',
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+      credentials: true,
+    }
+  },
   colorMode: {
     classSuffix: ''
   },
