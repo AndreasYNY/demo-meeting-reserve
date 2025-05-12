@@ -9,3 +9,43 @@ services:
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: frontend.dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    depends_on:
+      - postgre
+      - backend
+    environment:
+      - 'NUXT_PUBLIC_API_URL=${BACKEND_URL}'
+
+  backend:
+    build: 
+      context: .
+      dockerfile: backend.dockerfile
+    container_name: backend
+    restart: always
+    environment:
+      - 'DB_HOST=${DB_HOST}'
+      - 'DB_PORT=${DB_PORT}'
+      - 'DB_USER=${DB_USER}'
+      - 'DB_PASSWORD=${DB_PASSWORD}'
+      - 'HASH=${HASH}'
+      - 'ORIGINS=${BACKEND_ORIGINS}'
+    ports:
+      - "3300:3300"
+    networks:
+      - default
+    depends_on:
+      - postgre
+
+networks:
+  default:
+    driver: bridge
