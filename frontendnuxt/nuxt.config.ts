@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   modules: ['shadcn-nuxt', '@nuxtjs/color-mode', 'nuxt-security'],
   security: {
     corsHandler: {
-      origin: '*',
+      origin: process.env.NUXT_PUBLIC_API_URL|| '*',
       methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
       credentials: true,
     }
