@@ -1,5 +1,5 @@
 import { db } from "../kysely/database"
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { User } from "../kysely/types"
 import * as jose from 'jose'
 import { usernameAvailCheck } from "./user"
