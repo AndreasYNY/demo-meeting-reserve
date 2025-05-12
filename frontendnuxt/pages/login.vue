@@ -70,10 +70,45 @@
             })
         }
     }
+
+    async function migrate() {
+        const res = await $fetch(`${config.public.apiUrl}/migrations/up`)
+        if (res) {
+            toast.success("Migrate Sucessful", {
+                description: res,
+                duration: 2000,
+            })
+        } else {
+            toast.error("Migrate Failed", {
+                important: true,
+                duration: 2000,
+            })
+        }
+    }
+
+    async function down() {
+        const res = await $fetch(`${config.public.apiUrl}/migrations/down`)
+        if (res) {
+            toast.success("Down Sucessful", {
+                description: res,
+                duration: 2000,
+            })
+        } else {
+            toast.error("Down Failed", {
+                important: true,
+                duration: 2000,
+            })
+        }
+    }
+
 </script>
 
 <template>
-    <div class="flex justify-center items-center h-screen">
+    <div class="flex flex-col gap-4 justify-center items-center h-screen">
+        <div class="flex gap-2">
+            <Button @click="migrate">Migrate Database</Button>
+            <Button @click="down">Drop Database</Button>
+        </div>
         <Card class="w-[20rem]">
             <CardHeader>
                 <span v-if="!registerState">Login</span>
